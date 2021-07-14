@@ -20,6 +20,21 @@ function playRound(playerSelection, computerSelection) {
     let win = `You win! ${playerSelection} beats ${computerSelection}`
     let lose = `You lose! ${computerSelection} beats ${playerSelection}`
     if (playerSelection == 'rock') {
-        if (computerSelection == 'rock') 
+        if (computerSelection == 'rock') return 'Draw!';
+        else if (computerSelection == 'paper') return lose;
+        else if (computerSelection == 'scissors') return win;
+        else throw 'Error';
+    }
+    if (playerSelection == 'paper') {
+        if (computerSelection == 'rock') return win;
+        else if (computerSelection == 'paper') return 'Draw!';
+        else if (computerSelection == 'scissors') return lose;
+        else throw 'Error';
+    }
+    if (playerSelection == 'scissors') {
+        if (computerSelection == 'rock') return lose;
+        else if (computerSelection == 'paper') return win;
+        else if (computerSelection == 'scissors') return 'Draw!';
+        else throw 'Error';
     }
 }
