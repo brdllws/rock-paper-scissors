@@ -56,3 +56,13 @@ function game() {
     else if (playerPts > computerPts) console.log("You win!");
     else console.log("You lose! :(");
 }
+
+const buttons = document.querySelectorAll("#btn")
+buttons.forEach(myFunc);
+function myFunc(item) {
+    item.addEventListener("click", function() {
+    alert(playRound(item.innerText, computerPlay())[0]);
+    });
+}
+
+// game();
