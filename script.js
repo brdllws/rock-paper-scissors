@@ -57,11 +57,39 @@ function game() {
     else console.log("You lose! :(");
 }
 
+let numPoints = 0;
+let numPointsCom = 0;
 const buttons = document.querySelectorAll("#btn")
 buttons.forEach(myFunc);
 function myFunc(item) {
     item.addEventListener("click", function() {
-    alert(playRound(item.innerText, computerPlay())[0]);
+    let results = playRound(item.innerText, computerPlay());
+    const currResult = document.querySelector(".current-result");
+    currResult.textContent = results[0];
+    const currPoints = document.querySelector(".user-score");
+    const comPoints = document.querySelector(".comp-score");
+    if (results[1]) {
+        numPoints++;
+        currPoints.textContent = `You have ${numPoints} points`;
+        if (numPoints == 5) {
+            const finalResult = document.querySelector(".final-results");
+            finalResult.textContent = "You win the game!"
+            currPoints.textContent = "You have 0 points.";
+            comPoints.textContent = "The computer has 0 points.";
+            numPoints, numPointsCom = 0;  
+        }
+    }
+    else if (results[0] != "Draw!") {
+        numPointsCom++;
+        comPoints.textContent = `The computer has ${numPointsCom} points`;
+        if (numPointsCom == 5) {
+            const finalResult = document.querySelector(".final-results");
+            finalResult.textContent = "You lose the game!"
+            currPoints.textContent = "You have 0 points.";
+            comPoints.textContent = "The computer has 0 points.";
+            numPoints, numPointsCom = 0;  
+        }
+    }
     });
 }
 
