@@ -15,26 +15,24 @@ function computerPlay() {
 }
 
 function playRound(playerSelection, computerSelection) {
-    playerSelection = playerSelection.toLowerCase();
-    computerSelection = computerSelection.toLowerCase();
     let win = `You win! ${playerSelection} beats ${computerSelection}`
     let lose = `You lose! ${computerSelection} beats ${playerSelection}`
-    if (playerSelection == 'rock') {
-        if (computerSelection == 'rock') return ['Draw!', 0];
-        else if (computerSelection == 'paper') return [lose, false];
-        else if (computerSelection == 'scissors') return [win, true];
+    if (playerSelection == 'Rock') {
+        if (computerSelection == 'Rock') return ['Draw!', 0];
+        else if (computerSelection == 'Paper') return [lose, false];
+        else if (computerSelection == 'Scissors') return [win, true];
         else throw 'Error';
     }
-    if (playerSelection == 'paper') {
-        if (computerSelection == 'rock') return [win, true];
-        else if (computerSelection == 'paper') return ['Draw!', 0];
-        else if (computerSelection == 'scissors') return [lose, false];
+    if (playerSelection == 'Paper') {
+        if (computerSelection == 'Rock') return [win, true];
+        else if (computerSelection == 'Paper') return ['Draw!', 0];
+        else if (computerSelection == 'Scissors') return [lose, false];
         else throw 'Error';
     }
-    if (playerSelection == 'scissors') {
-        if (computerSelection == 'rock') return [lose, false];
-        else if (computerSelection == 'paper') return [win, true];
-        else if (computerSelection == 'scissors') return ['Draw!', 0];
+    if (playerSelection == 'Scissors') {
+        if (computerSelection == 'Rock') return [lose, false];
+        else if (computerSelection == 'Paper') return [win, true];
+        else if (computerSelection == 'Scissors') return ['Draw!', 0];
         else throw 'Error';
     }
 }
@@ -63,33 +61,38 @@ const buttons = document.querySelectorAll("#btn")
 buttons.forEach(myFunc);
 function myFunc(item) {
     item.addEventListener("click", function() {
-    let results = playRound(item.innerText, computerPlay());
-    const currResult = document.querySelector(".current-result");
-    currResult.textContent = results[0];
-    const currPoints = document.querySelector(".user-score");
-    const comPoints = document.querySelector(".comp-score");
-    if (results[1]) {
-        numPoints++;
-        currPoints.textContent = `You have ${numPoints} points`;
-        if (numPoints == 5) {
-            const finalResult = document.querySelector(".final-results");
-            finalResult.textContent = "You win the game!"
-            currPoints.textContent = "You have 0 points.";
-            comPoints.textContent = "The computer has 0 points.";
-            numPoints, numPointsCom = 0;  
+        let the_comp = computerPlay();
+        console.log(the_comp);
+        let results = playRound(item.innerText, the_comp);
+        const currResult = document.querySelector(".current-result");
+        currResult.textContent = results[0];
+        const currPoints = document.querySelector(".user-score");
+        const comPoints = document.querySelector(".comp-score");
+        const finalResult = document.querySelector(".final-results");
+        if (results[1]) {
+            finalResult.textContent = "";
+            numPoints++;
+            currPoints.textContent = `Player: ${numPoints} pts`;
+            if (numPoints == 5) {
+                finalResult.textContent = "You win the game!"
+                currPoints.textContent = "Player: 0 pts";
+                comPoints.textContent = "Computer: 0 pts";
+                numPoints = 0;
+                numPointsCom = 0;  
+            }
         }
-    }
-    else if (results[0] != "Draw!") {
-        numPointsCom++;
-        comPoints.textContent = `The computer has ${numPointsCom} points`;
-        if (numPointsCom == 5) {
-            const finalResult = document.querySelector(".final-results");
-            finalResult.textContent = "You lose the game!"
-            currPoints.textContent = "You have 0 points.";
-            comPoints.textContent = "The computer has 0 points.";
-            numPoints, numPointsCom = 0;  
+        else if (results[0] != "Draw!") {
+            finalResult.textContent = "";
+            numPointsCom++;
+            comPoints.textContent = `Computer: ${numPointsCom} pts`;
+            if (numPointsCom == 5) {
+                finalResult.textContent = "You lose the game!"
+                currPoints.textContent = "Player: 0 pts";
+                comPoints.textContent = "Computer: 0 pts";
+                numPoints = 0;
+                numPointsCom = 0;  
+            }
         }
-    }
     });
 }
 
